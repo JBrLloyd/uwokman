@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: yarn install and build webpack
+      - name: npm install and build webpack
         run: |
-          yarn install
-          yarn build
+          npm install
+          npm run-script build
       - uses: actions/upload-artifact@main
         with:
           name: webpack artifacts
