@@ -18,11 +18,11 @@ jobs:
       - name: yarn install and build webpack
         run: |
           yarn install
-          yarn run build
+          yarn build
       - uses: actions/upload-artifact@main
         with:
           name: webpack artifacts
-          path: dist/
+          path: ./dist/
 
   # build-node:
   #   runs-on: ubuntu-latest
