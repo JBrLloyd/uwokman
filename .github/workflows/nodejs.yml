@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [develop]
 
-defaults:
-  run:
-    working-directory: ./server
+# defaults:
+#   run:
+#     working-directory: ./server
 
 jobs:
   run-yarn-build:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/upload-artifact@main
         with:
           name: webpack artifacts
-          path: ./dist/
+          path: dist/
 
   # build-node:
   #   runs-on: ubuntu-latest
