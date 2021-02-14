@@ -1,30 +1,48 @@
 name: Node CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ $default-branch ]
+
+defaults:
+  run:
+    working-directory: ./server
 
 jobs:
-  build-node:
+  run-yarn-build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Get npm cache directory
-        id: npm-cache
+      - uses: actions/checkout@v2
+      - name: yarn install and build webpack
         run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - uses: actions/cache@v1
+          yarn install
+          yarn run build
+      - uses: actions/upload-artifact@main
         with:
-          path: ${{ steps.npm-cache.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: npm install, build, and test
-        run: |
-          npm ci
-          npm run build --if-present
-        env:
-          CI: true
+          name: webpack artifacts
+          path: dist/
+
+  # build-node:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Use Node.js 12.x
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 12.x
+  #     - name: Get npm cache directory
+  #       id: npm-cache
+  #       run: |
+  #         echo "::set-output name=dir::$(npm config get cache)"
+  #     - uses: actions/cache@v1
+  #       with:
+  #         path: ${{ steps.npm-cache.outputs.dir }}
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #     - name: npm install, build, and test
+  #       run: |
+  #         npm ci
+  #         npm run build --if-present
+  #       env:
+  #         CI: true
