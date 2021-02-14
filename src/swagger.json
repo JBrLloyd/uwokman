@@ -1,0 +1,59 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Seans-TypeScript-NodeJS-CRUD-REST-API-Boilerplate",
+    "description": "A minimal and easy to follow example of what you need to create a CRUD style API in NodeJs using TypeScript",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [{
+    "name": "GetCurrentSong",
+    "description": "API for getting currently playing spotify song"
+  }],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/spotify/current": {
+      "get": {
+        "tags": [
+          "Spotify"
+        ],
+        "summary": "Get currently playing spotify song",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CurrentSong"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CurrentSong": {
+      "type": "object",
+      "properties": {
+        "genus": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isHungry": {
+          "type": "boolean"
+        },
+        "lastFedDate": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
