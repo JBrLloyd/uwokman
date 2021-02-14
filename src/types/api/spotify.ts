@@ -3,7 +3,7 @@ export interface SpotifyV1MePlayerResponse {
   shuffle_state:          boolean;
   repeat_state:           string;
   timestamp:              number;
-  context:                Context;
+  context?:                Context;
   progress_ms:            number;
   item:                   Item;
   currently_playing_type: string;
@@ -20,7 +20,7 @@ export interface Disallows {
 }
 
 export interface Context {
-  external_urls: ExternalUrls;
+  external_urls?: ExternalUrls;
   href:          string;
   type:          string;
   uri:           string;

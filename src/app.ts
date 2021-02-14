@@ -1,18 +1,18 @@
-import path from 'path';
-import express from 'express';
-import compression from 'compression';
 import bodyParser from 'body-parser';
-import lusca from 'lusca';
+import compression from 'compression';
+import cors from 'cors';
+import express from 'express';
+import exphbs from 'express-handlebars';
 // import flash from 'express-flash';
 import helmet from 'helmet';
-import cors from 'cors';
+import lusca from 'lusca';
+import path from 'path';
 import swaggerUi from 'swagger-ui-express';
-import exphbs from 'express-handlebars';
-
+import { cancelRequestHandler, errorHandler } from './middleware';
+import * as routes from './routes';
 import swagger from './swagger.json';
 import { logStream } from './util/logger';
-import * as routes from './routes';
-import { errorHandler, cancelRequestHandler } from './middleware';
+
 
 // Create Express server
 const app = express();
@@ -59,8 +59,9 @@ const hbs = exphbs.create({
       const milliseconds = Number(valueMS);
 
       const secs = (milliseconds % 60000) / 1000;
+      const twoDigitSecs = secs >= 10 ? secs.toFixed(0) : `0${secs.toFixed(0)}`;
       const mins = Math.floor(milliseconds / 60000);
-      return `${mins}:${secs.toFixed(0)}`;
+      return `${mins}:${twoDigitSecs}`;
     },
     mathPercentage: function (value1: any, value2: any) {
       const valuesAreDefined = value1 !== undefined && value2 !== undefined;

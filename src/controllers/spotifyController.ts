@@ -1,11 +1,11 @@
 'use strict';
-import { Request, Response, NextFunction } from 'express';
-import logger from '../util/logger';
+import { NextFunction, Request, Response } from 'express';
 import { getUserCurrentlyPlayingSpotify } from '../services/spotifyService';
+import { Artist, Image, SpotifyV1MePlayerResponse } from '../types/api/spotify';
+import { CurrentSongSvgView } from '../types/viewModels';
+import logger from '../util/logger';
 import { getSpotifyBearerToken } from '../util/spotifyToken';
 import { urlToBase64 } from '../util/urlConversion';
-import { Artist, SpotifyV1MePlayerResponse, Image } from '../types/api/spotify';
-import { CurrentSongSvgView } from '../types/viewModels';
 
 const generateViewData = async (data: SpotifyV1MePlayerResponse): Promise<CurrentSongSvgView> => {
   const artistString = (data.item.artists || []).map((elem: Artist) => elem.name).join(', ');
@@ -16,7 +16,7 @@ const generateViewData = async (data: SpotifyV1MePlayerResponse): Promise<Curren
   return {
     height: 495.72,
     title: data.is_playing ? 'Now playing' : 'Recently played',
-    link: data.context.external_urls.spotify,
+    link: data?.context?.external_urls?.spotify || data.item.external_urls.spotify,
     artists: artistString,
     coverImageBase64: coverImgBase64 ? `data:image/png;base64,${coverImgBase64}` : null,
     songName: data.item.name,
