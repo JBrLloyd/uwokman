@@ -3,5 +3,5 @@ import { spotifyController } from './controllers';
 
 
 export const setup = (app: Express): void => {
-  app.get('/spotify/current-song.svg', spotifyController.getCurrentlyPlayingSongSvg);
+  app.get('/spotify/currently-playing.svg', spotifyController.getCurrentlyPlayingSongSvg);
 };
