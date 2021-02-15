@@ -64,7 +64,6 @@ const hbs = exphbs.create({
       return `${mins}:${twoDigitSecs}`;
     },
     mathPercentage: function (value1: any, value2: any) {
-      const valuesAreDefined = value1 !== undefined && value2 !== undefined;
       if (value1 === undefined && value2 === undefined) {
         return 0;
       }

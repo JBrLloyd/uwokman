@@ -45,6 +45,12 @@ export const getCurrentlyPlayingSongSvg = async (req: Request, res: Response, ne
     logger.error(exception);
   } finally {
     res.contentType('image/svg+xml');
+
+    // Set no caching
+    res.header('Cache-Control', 'no-cache,max-age=0,no-store,s-maxage=0,proxy-revalidate');
+    res.header('Pragma', 'no-cache');
+    res.header('Expires', '-1');
+
     res.render('current-song', {
       data: viewData,
       layout: false
